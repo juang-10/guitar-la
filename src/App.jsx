@@ -1,5 +1,5 @@
 import { Guitar } from "./components/Guitar";
-import Header from "./components/Header";
+import { Header } from "./components/Header";
 function App() {
   return (
     <>
