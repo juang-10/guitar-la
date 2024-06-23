@@ -1,4 +1,4 @@
-export default function Header() {
+export const Header = () => {
   return (
     <header className="py-5 header">
       <div className="container-xl">
