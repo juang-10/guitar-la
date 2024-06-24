@@ -1,11 +1,25 @@
-import { useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import {  useState } from "react";
 import { Guitar } from "./components/Guitar";
 import { Header } from "./components/Header";
 import { db } from "./data/db";
 
 function App() {
   const [data, setData] = useState(db);
+  const [cart, setCart] = useState([]);
   
+  const addToCart = (item) => {
+    const itemExists = cart.findIndex((guitar) => guitar.id === item.id)
+    console.log("🚀 ~ addToCart ~ itemExists:", itemExists)
+    if(itemExists >= 0) {
+      const updatedCart = [...cart];
+      updatedCart[itemExists].quantity++;
+      setCart(updatedCart);
+    } else {
+      item.quantity = 1;
+      setCart([...cart, item])
+    }
+  }
   return (
     <>
       <Header />
@@ -17,6 +31,7 @@ function App() {
             <Guitar
               key={guitar.id}
               guitar={guitar}
+              addToCart={addToCart}
             />
           ))}
           <Guitar />
