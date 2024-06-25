@@ -10,8 +10,7 @@ function App() {
   
   const addToCart = (item) => {
     const itemExists = cart.findIndex((guitar) => guitar.id === item.id)
-    console.log("🚀 ~ addToCart ~ itemExists:", itemExists)
-    if(itemExists >= 0) {
+    if(itemExists >= 0) { // existe en el carrito
       const updatedCart = [...cart];
       updatedCart[itemExists].quantity++;
       setCart(updatedCart);
@@ -22,7 +21,9 @@ function App() {
   }
   return (
     <>
-      <Header />
+      <Header 
+        cart={cart}
+      />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
 
