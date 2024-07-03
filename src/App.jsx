@@ -54,6 +54,10 @@ function App() {
     setCart(updatedCart);
   }
 
+  const clearCar = () => {
+    setCart([]);
+  }
+
   return (
     <>
       <Header 
@@ -61,6 +65,7 @@ function App() {
         removeFromCart={removeFromCart}
         increaseQuantity={increaseQuantity}
         descreaseQuantity={descreaseQuantity}
+        clearCar={clearCar}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
