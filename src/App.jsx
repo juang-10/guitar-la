@@ -3,69 +3,20 @@ import {  createRef, useEffect, useState } from "react";
 import { Guitar } from "./components/Guitar";
 import { Header } from "./components/Header";
 import { db } from "./data/db";
+import { useCart } from "./hooks/useCart";
 
 function App() {
-  const initialCart = () => {
-    const localStorageCart = localStorage.getItem('cart');
-    return localStorageCart ? JSON.parse(localStorageCart) : [];
-  }
-  const [data] = useState(db);
-  const [cart, setCart] = useState(initialCart);
-
-  const MAX_ITEMS = 5;
-  const MIN_ITEMS = 1;
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart])
   
-  const addToCart = (item) => {
-    const itemExists = cart.findIndex((guitar) => guitar.id === item.id)
-    if(itemExists >= 0) { // existe en el carrito
-      if(cart[itemExists].quantity >= MAX_ITEMS ) return;
-      const updatedCart = [...cart];
-      updatedCart[itemExists].quantity++;
-      setCart(updatedCart);
-    } else {
-      item.quantity = 1;
-      setCart([...cart, item])
-    }
-  }
+  const {
+    data,
+    addToCart,
+    removeFromCart,
+    increaseQuantity,
+    descreaseQuantity,
+    clearCart,
+    cart
+  } =  useCart();
 
-  const removeFromCart = (id) => {
-    setCart(prevCart => prevCart.filter((guitar) => guitar.id !== id))
-  }
-
-  const increaseQuantity = (id) => {
-    const updatedCart = cart.map( item => {
-      if(item.id === id && item.quantity < 5) {
-        return {
-          ...item,
-          quantity: item.quantity + 1
-        }
-      }
-      return item
-    })
-    setCart(updatedCart);
-  }
-
-  const descreaseQuantity = (id) => {
-    const updatedCart = cart.map( item => {
-      if(item.id === id && item.quantity > MIN_ITEMS) {
-        return {
-          ...item,
-          quantity: item.quantity - 1
-        }
-      }
-      return item
-    })
-    setCart(updatedCart);
-  }
-
-  const clearCar = () => {
-    setCart([]);
-  }
-  
   return (
     <>
       <Header 
@@ -73,7 +24,7 @@ function App() {
         removeFromCart={removeFromCart}
         increaseQuantity={increaseQuantity}
         descreaseQuantity={descreaseQuantity}
-        clearCar={clearCar}
+        clearCart={clearCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
