@@ -41,7 +41,6 @@ function App() {
               addToCart={addToCart}
             />
           ))}
-          <Guitar />
         </div>
       </main>
 
